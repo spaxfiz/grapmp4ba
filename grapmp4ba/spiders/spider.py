@@ -12,5 +12,5 @@ class MovieSpider(scrapy.Spider):
     def parse(self, response):
         filename = 'mp4ba'
         print 'right here'
-        with open(filename, 'wb'):
+        with open(filename, 'wb') as f:
             f.write(response.body)
