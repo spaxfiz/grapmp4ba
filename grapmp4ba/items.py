@@ -8,13 +8,13 @@
 import scrapy
 
 
-class Grapmp4BaItem(scrapy.Item):
+class Mp4BaItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     title = scrapy.Field()
     link = scrapy.Field()
     definition = scrapy.Field()
-    pic = scrapy.Field()
+    pic_path = scrapy.Field()
     dl_link = scrapy.Field()
-    desc = scrapy.Field()
-    hashcode= scrapy.Field()
+    detail = scrapy.Field()
+    hashcode= scrapy.Field() 
