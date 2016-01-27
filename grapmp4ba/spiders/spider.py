@@ -44,6 +44,8 @@ class MovieSpider(scrapy.Spider):
         dl_link_path = '//p[@class="original download"]/a/@href' 
         detail_path = '///div[@class="intro"]/text()'      
 
+        print response.url + '&'*20
+
         item = Mp4BaItem()
         pattern = re.compile(r'(?<=HD)\d+(?=P)')
         pattern2 = re.compile(r'(?<=hash\=)\w+')
