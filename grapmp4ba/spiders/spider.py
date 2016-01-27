@@ -23,7 +23,7 @@ class MovieSpider(scrapy.Spider):
 
         date_path = '//table[@id="listTable"]/tbody/tr/td[1]/text()'
         title_path = '//table[@id="listTable"]/tbody/tr[%s]/td[3]/a/text()'
-        link_path = '////table[@id="listTable"]/tbody/tr[%s]/td[3]/a/@href'
+        link_path = '//table[@id="listTable"]/tbody/tr[%s]/td[3]/a/@href'
         rs = response.xpath(date_path).extract()
         for index, item in enumerate(rs):
             date = item.split(' ')[0]
@@ -43,11 +43,11 @@ class MovieSpider(scrapy.Spider):
         detail_path = '//div[@class="intro"]/text()' 
         dl_link_path = '//p[@class="original download"/a/@href' 
         detail_path = '///div[@class="intro"]/text()'      
-        print response.xpath(title_path).extract()[0]
+
         item = Mp4BaItem()
         pattern = re.compile(r'(?<=HD)\d+(?=P)')
         pattern2 = re.compile(r'(?<=hash\=)\w+')
-        item['title'] = response.xpath(title_path).extract()[0].encode('utf-8','ignore')
+        item['title'] = response.xpath(title_path).extract()[0]
         item['link'] = response.url
         item['definition'] = pattern.match(item['title']).group() if pattern.match(item['title']) else None
         item['pic_path'] = response.xpath(pic_path).extract()[0]
@@ -55,4 +55,5 @@ class MovieSpider(scrapy.Spider):
         item['detail'] = '<br>'.join([x.encode('uft-8') for x in response.xpath(detail_path).extract()])
         item['hashcode'] = pattern.match(response.url).group()
 
+        print item
         yield item
