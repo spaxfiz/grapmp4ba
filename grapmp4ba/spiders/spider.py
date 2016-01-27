@@ -2,10 +2,12 @@
 # 
 import scrapy
 import time
+import re
 from scrapy.selector import Selector
 from scrapy.selector import HtmlXPathSelector
 from scrapy.http import Request
 from scrapy import log
+from items import Mp4BaItem
 
 today = time.strftime('%m/%d')
 
@@ -18,24 +20,37 @@ class MovieSpider(scrapy.Spider):
     ]
 
     def parse(self, response):
-        hxs = HtmlXPathSelector(response)
-        date_path = '//table[@id="listTable"]/tbody/tr/td[1]/text())'
-        title_path = '/table[@id="listTable"]/tbody/tr[%s]/td[3]/a/text())'
-        rs = hxs.xpath(date_path).extract()
+
+        date_path = '//table[@id="listTable"]/tbody/tr/td[1]/text()'
+        title_path = '//table[@id="listTable"]/tbody/tr[%s]/td[3]/a/text()'
+        link_path = '////table[@id="listTable"]/tbody/tr[%s]/td[3]/a/@href'
+        rs = response.xpath(date_path).extract()
         for index, item in enumerate(rs):
             date = item.split(' ')[0]
             if date == today:
-                title = hxs.xpath(title_path%(index+1)).extract()
+                title = response.xpath(title_path%(index+1)).extract()
+                link = 'http://' + allowed_domains[0] + '/' + response.xpath(link_path%(index+1)).extract()
+                yield Request(url=link,dont_filter=True,callback=self.parse_detail)
 
 
 
 
     def parse_detail(self, response):
-        """grap"""
-        pass
+        """grab detail"""
 
-
-def check_exists(title):
-    """query from db, to find out if title has been processed"""
-
-    pass
+        title_path = '//div[@class="location"]/text()[3]'
+        pic_path = '//div[@class="intro"]/img/@src'
+        detail_path = '//div[@class="intro"]/text()' 
+        dl_link_path = '//p[@class="original download"/a/@href' 
+        detail_path = '///div[@class="intro"]/text()'      
+        
+        movie = Mp4BaItem()
+        pattern = re.compile(r'(?<=HD)\d+(?=P)')
+        pattern2 = re.compile(r'(?<=hash\=)\w+')
+        movie['title'] = response.xpath(title_path).extract()[0].encode('utf-8','ignore')
+        movie['link'] = response.url
+        movie['definition'] = pattern.match(movie['title']).group()
+        movie['pic_path'] = response.xpath(pic_path).extract()[0]
+        movie['dl_link'] = response.xpath(dl_link_path).extract()[0]
+        movie['detail'] = '<br>'.join([x.encode('uft-8') for x in response.xpath(detail_path).extract()])
+        movie['hashcode'] = pattern.match(response.url).group()
