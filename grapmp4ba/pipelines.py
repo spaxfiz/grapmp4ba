@@ -24,8 +24,13 @@ class Grapmp4BaPipeline(object):
                       hashcode=item['hashcode'],
                       etl_date='now()'
                       )
-        self.session.add(movie)
-        self.session.commit()
+        try:
+            self.session.add(movie)
+            self.session.commit()
+        except Exception, e:
+            print e
+            raise e
+        
 
     def open_spider(self, spider):
         self.session = DBSession()
