@@ -29,7 +29,7 @@ class MovieSpider(scrapy.Spider):
             date = item.split(' ')[0]
             if date == today:
                 title = response.xpath(title_path%(index+1)).extract()
-                link = 'http://' + (self.allowed_domains)[0] + '/' + response.xpath(link_path%(index+1)).extract()
+                link = 'http://www.mp4ba.com/' + response.xpath(link_path%(index+1)).extract()
                 yield Request(url=link,dont_filter=True,callback=self.parse_detail)
 
 
