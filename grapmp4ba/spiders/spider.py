@@ -53,7 +53,7 @@ class MovieSpider(scrapy.Spider):
         item['pic_path'] = response.xpath(pic_path).extract()[0]
         item['dl_link'] = response.xpath(dl_link_path).extract()[0]
         item['detail'] = response.xpath(detail_path).extract()
-        item['hashcode'] = pattern2.match(response.url).group() if pattern2.match(response.url) else None
+        item['hashcode'] = pattern2.match(item['title']).group() if pattern2.match(item['title']) else None
 
         print item
         yield item
