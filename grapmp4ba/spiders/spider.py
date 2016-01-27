@@ -38,7 +38,7 @@ class MovieSpider(scrapy.Spider):
     def parse_detail(self, response):
         """grab detail"""
 
-        title_path = '//li[@class="folder last"]/text()[1]'
+        title_path = '//title/text()'
         pic_path = '//div[@class="intro"]/img/@src'
         detail_path = '//div[@class="intro"]/text()' 
         dl_link_path = '//p[@class="original download"]/a/@href' 
@@ -49,9 +49,9 @@ class MovieSpider(scrapy.Spider):
         item = Mp4BaItem()
         pattern = re.compile('(?=<HD)\d+(?=P)')
         pattern2 = re.compile('\w{40}')
-        item['title'] = response.xpath(title_path).extract()[0]
+        item['title'] = response.xpath(title_path).extract()[0].split('-')[0]
         item['link'] = response.url
-        item['definition'] = pattern.match(item['title'][0].encode('utf-8', 'ignore')).group()
+        item['definition'] = pattern.match(item['title'].encode('utf-8', 'ignore')).group()
         item['pic_path'] = response.xpath(pic_path).extract()[0]
         item['dl_link'] = response.xpath(dl_link_path).extract()[0]
         item['detail'] = response.xpath(detail_path).extract()
