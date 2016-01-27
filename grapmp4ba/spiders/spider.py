@@ -41,7 +41,7 @@ class MovieSpider(scrapy.Spider):
         title_path = '//div[@class="location"]/text()[3]'
         pic_path = '//div[@class="intro"]/img/@src'
         detail_path = '//div[@class="intro"]/text()' 
-        dl_link_path = '//p[@class="original download"/a/@href' 
+        dl_link_path = '//p[@class="download"/a/@href' 
         detail_path = '///div[@class="intro"]/text()'      
 
         item = Mp4BaItem()
