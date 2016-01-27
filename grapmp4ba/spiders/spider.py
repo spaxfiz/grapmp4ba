@@ -43,13 +43,13 @@ class MovieSpider(scrapy.Spider):
         detail_path = '//div[@class="intro"]/text()' 
         dl_link_path = '//p[@class="original download"/a/@href' 
         detail_path = '///div[@class="intro"]/text()'      
-        
+        print response.body
         item = Mp4BaItem()
         pattern = re.compile(r'(?<=HD)\d+(?=P)')
         pattern2 = re.compile(r'(?<=hash\=)\w+')
         item['title'] = response.xpath(title_path).extract()[0].encode('utf-8','ignore')
         item['link'] = response.url
-        item['definition'] = pattern.match(item['title']).group()
+        item['definition'] = pattern.match(item['title']).group() if pattern.match(item['title']) else None
         item['pic_path'] = response.xpath(pic_path).extract()[0]
         item['dl_link'] = response.xpath(dl_link_path).extract()[0]
         item['detail'] = '<br>'.join([x.encode('uft-8') for x in response.xpath(detail_path).extract()])
