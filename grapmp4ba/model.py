@@ -2,7 +2,7 @@
 from sqlalchemy import Column, DateTime, Integer, String, create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-from config import MYSQL_CONF as conf
+from grapmp4ba.config import MYSQL_CONF as conf
 
 Base = declarative_base()
 metadata = Base.metadata
