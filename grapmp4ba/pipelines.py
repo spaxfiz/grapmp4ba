@@ -16,7 +16,7 @@ class Grapmp4BaPipeline(object):
         detail = cgi.escape('<br>'.join(filter(lambda x: x!='', [x.strip().encode('utf-8', 'ignore') for x in item['detail']])))
 
         pattern = re.compile('(?<=HD)\d+(?=P)')
-        pattern2 = re.compile('(?<==)\w+(?=$)')
+        pattern2 = re.compile('(?<=\=)\w+')
 
         definition = pattern.match(item['title']).group() if pattern.match(item['title']) else None
         hashcode = pattern2.match(item['link']).group()
