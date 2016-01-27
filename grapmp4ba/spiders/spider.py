@@ -44,13 +44,15 @@ class MovieSpider(scrapy.Spider):
         dl_link_path = '//p[@class="original download"/a/@href' 
         detail_path = '///div[@class="intro"]/text()'      
         
-        movie = Mp4BaItem()
+        item = Mp4BaItem()
         pattern = re.compile(r'(?<=HD)\d+(?=P)')
         pattern2 = re.compile(r'(?<=hash\=)\w+')
-        movie['title'] = response.xpath(title_path).extract()[0].encode('utf-8','ignore')
-        movie['link'] = response.url
-        movie['definition'] = pattern.match(movie['title']).group()
-        movie['pic_path'] = response.xpath(pic_path).extract()[0]
-        movie['dl_link'] = response.xpath(dl_link_path).extract()[0]
-        movie['detail'] = '<br>'.join([x.encode('uft-8') for x in response.xpath(detail_path).extract()])
-        movie['hashcode'] = pattern.match(response.url).group()
+        item['title'] = response.xpath(title_path).extract()[0].encode('utf-8','ignore')
+        item['link'] = response.url
+        item['definition'] = pattern.match(item['title']).group()
+        item['pic_path'] = response.xpath(pic_path).extract()[0]
+        item['dl_link'] = response.xpath(dl_link_path).extract()[0]
+        item['detail'] = '<br>'.join([x.encode('uft-8') for x in response.xpath(detail_path).extract()])
+        item['hashcode'] = pattern.match(response.url).group()
+
+        yield item
