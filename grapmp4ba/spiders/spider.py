@@ -47,15 +47,15 @@ class MovieSpider(scrapy.Spider):
         print response.url + '&'*20
 
         item = Mp4BaItem()
-        pattern = re.compile(r'(?=<HD)\d+(?=P)')
-        pattern2 = re.compile(r'\w{40}')
+        pattern = re.compile('(?=<HD)\d+(?=P)')
+        pattern2 = re.compile('\w{40}')
         item['title'] = response.xpath(title_path).extract()[0]
         item['link'] = response.url
-        item['definition'] = pattern.match(item['title']).group() if pattern.match(item['title']) else None
+        item['definition'] = pattern.match(str(item['title'])).group()
         item['pic_path'] = response.xpath(pic_path).extract()[0]
         item['dl_link'] = response.xpath(dl_link_path).extract()[0]
         item['detail'] = response.xpath(detail_path).extract()
-        item['hashcode'] = pattern2.match(response.url).group() if pattern2.match(response.url) else None
+        item['hashcode'] = pattern2.match(item['link']).group() if pattern2.match(item['link']) else None
 
         print item
         yield item
