@@ -13,7 +13,7 @@ today = time.strftime('%m/%d')
 
 class MovieSpider(scrapy.Spider):
     name = 'mp4ba'
-    allowed_domains = "www.mp4ba.com"
+    allowed_domains = ["www.mp4ba.com"]
     start_urls = [
         "http://www.mp4ba.com/index.php?sort_id=2",
         "http://www.mp4ba.com/index.php?sort_id=3"
@@ -29,7 +29,7 @@ class MovieSpider(scrapy.Spider):
             date = item.split(' ')[0]
             if date == today:
                 title = response.xpath(title_path%(index+1)).extract()
-                link = 'http://' + self.allowed_domains + '/' + response.xpath(link_path%(index+1)).extract()
+                link = 'http://' + (self.allowed_domains)[0] + '/' + response.xpath(link_path%(index+1)).extract()
                 yield Request(url=link,dont_filter=True,callback=self.parse_detail)
 
 
