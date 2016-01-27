@@ -13,15 +13,21 @@ class Grapmp4BaPipeline(object):
 
     def process_item(self, item, spider):
         detail = cgi.escape('<br>'.join(filter(lambda x: x!='', [x.strip().encode('utf-8', 'ignore') for x in item['detail']])))
-        title = item['title'].strip().encode('utf-8', 'ignore').strip('»')
+
+        pattern = re.compile('(?<=HD)\d+(?=P)')
+        pattern2 = re.compile('(?<==)\w+(?=$)')
+
+        definition = pattern.match(item['title']).group() if pattern.match(item['title']) else None
+        hashcode = pattern2.match(item['link']).group()
+        
         movie = Movie(title=title,
                       date_id=time.strftime('%Y%m%d'),
                       link=item['link'],
-                      definition=item['definition'],
+                      definition=definition,
                       pic_path=item['pic_path'],
                       dl_link=item['dl_link'],
                       detail=detail,
-                      hashcode=item['hashcode']
+                      hashcode=hashcode
                       )
         try:
             self.session.add(movie)
