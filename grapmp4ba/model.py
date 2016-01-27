@@ -9,7 +9,7 @@ metadata = Base.metadata
 
 
 class Movie(Base):
-    __tablename__ = 'movie'
+    __tablename__ = 'movies'
 
     id = Column(Integer, primary_key=True)
     date_id = Column(Integer)
