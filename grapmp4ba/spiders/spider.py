@@ -44,12 +44,11 @@ class MovieSpider(scrapy.Spider):
         dl_link_path = '//p[@class="original download"]/a/@href' 
         detail_path = '///div[@class="intro"]/text()'      
 
-        print response.url + '&'*20
-
         item = Mp4BaItem()
         pattern = re.compile('(?=<HD)\d+(?=P)')
         pattern2 = re.compile('\w{40}')
         item['title'] = response.xpath(title_path).extract()[0].split('-')[0]
+        print item['title']
         item['link'] = response.url
         item['definition'] = pattern.match(item['title'].encode('utf-8', 'ignore')).group()
         item['pic_path'] = response.xpath(pic_path).extract()[0]
