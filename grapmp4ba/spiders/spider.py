@@ -48,7 +48,7 @@ class MovieSpider(scrapy.Spider):
         pattern = re.compile('(?=<HD)\d+(?=P)')
         pattern2 = re.compile('\w{40}')
         item['title'] = response.xpath(title_path).extract()[0].split('-')[0]
-        print item['title']
+        print item['title'].encode('utf-8', 'ignore')
         item['link'] = response.url
         item['definition'] = pattern.match(item['title'].encode('utf-8', 'ignore')).group()
         item['pic_path'] = response.xpath(pic_path).extract()[0]
