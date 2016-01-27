@@ -23,7 +23,7 @@ class Movie(Base):
 
 
 # 初始化数据库连接:
-engine = create_engine('mysql+mysqldb://%s:%s@%s:%s/%s' % (conf['username'], '', conf['host'],conf['port'],conf['database']))
+engine = create_engine('mysql+mysqldb://%s:%s@%s:%s/%s' % (conf['username'], conf['password'], conf['host'],conf['port'],conf['database']))
 # 创建DBSession类型:
 DBSession = sessionmaker(bind=engine)
 
