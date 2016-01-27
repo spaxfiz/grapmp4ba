@@ -7,7 +7,7 @@ from scrapy.selector import Selector
 from scrapy.selector import HtmlXPathSelector
 from scrapy.http import Request
 from scrapy import log
-from items import Mp4BaItem
+from grapmp4ba.items import Mp4BaItem
 
 today = time.strftime('%m/%d')
 
