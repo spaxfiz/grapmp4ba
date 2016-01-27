@@ -20,7 +20,6 @@ class Movie(Base):
     dl_link = Column(String(255))
     detail = Column(String)
     hashcode = Column(String(255))
-    etl_date = Column(String(10))
 
 
 # 初始化数据库连接:

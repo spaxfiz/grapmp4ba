@@ -21,8 +21,7 @@ class Grapmp4BaPipeline(object):
                       pic_path=item['pic_path'],
                       dl_link=item['dl_link'],
                       detail=detail,
-                      hashcode=item['hashcode'],
-                      etl_date='now()'
+                      hashcode=item['hashcode']
                       )
         try:
             self.session.add(movie)
