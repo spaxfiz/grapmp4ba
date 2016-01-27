@@ -7,6 +7,7 @@
 from grapmp4ba.model import Movie, DBSession
 import time
 import cgi
+import re
 
 
 class Grapmp4BaPipeline(object):

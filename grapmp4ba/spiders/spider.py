@@ -2,7 +2,6 @@
 # 
 import scrapy
 import time
-import re
 from scrapy.selector import Selector
 from scrapy.selector import HtmlXPathSelector
 from scrapy.http import Request
