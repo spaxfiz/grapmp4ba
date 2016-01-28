@@ -8,7 +8,8 @@ from scrapy.http import Request
 from scrapy import log
 from grapmp4ba.items import Mp4BaItem
 
-today = time.strftime('%m/%d')
+# today = time.strftime('%m/%d')
+today = '01/27'
 
 class MovieSpider(scrapy.Spider):
     name = 'mp4ba'
