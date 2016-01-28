@@ -2,7 +2,7 @@
 from sqlalchemy import Column, DateTime, Integer, String, create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-from grapmp4ba.config import MYSQL_CONF as conf
+from config import MYSQL_CONF as conf
 
 Base = declarative_base()
 metadata = Base.metadata
@@ -28,7 +28,8 @@ engine = create_engine('mysql+mysqldb://%s:%s@%s:%s/%s' % (conf['username'], con
 DBSession = sessionmaker(bind=engine)
 
 # session = DBSession()
-# a = Movie(date_id=20160126, title='test', link='http', definition=1080, pic_path='/opt/pic', dl_link='https://', detail='test', hashcode='fsetetesfgaf43t23rg')
-# session.add(a)
-# session.commit()
+
+# r = session.query(Movie).all()
+# for x in r:
+#     print x.title
 # session.close()
