@@ -15,11 +15,11 @@ class Grapmp4BaPipeline(object):
     def process_item(self, item, spider):
         detail = cgi.escape('<br>'.join(filter(lambda x: x!='', [x.strip().encode('utf-8', 'ignore') for x in item['detail']])))
 
-        pattern = re.compile('(?<=(HD|BD))\d+(?=P)')
+        pattern = re.compile('(?<=HD|BD)\d+(?=P)')
         pattern2 = re.compile('(?<==)\w+')
 
-        definition = pattern.match(item['title'].encode('utf-8', 'ignore')).group() if pattern.match(item['title'].encode('utf-8', 'ignore')) else None
-        hashcode = pattern2.match(item['link']).group() if pattern2.match(item['link']) else None
+        definition = pattern.search(item['title'].encode('utf-8', 'ignore')).group() if pattern.search(item['title'].encode('utf-8', 'ignore')) else None
+        hashcode = pattern2.search(item['link']).group() if pattern2.search(item['link']) else None
         print item['title'].encode('utf-8', 'ignore')
         print item['link']
         print definition
