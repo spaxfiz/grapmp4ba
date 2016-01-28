@@ -18,14 +18,14 @@ class Grapmp4BaPipeline(object):
         pattern = re.compile('(?<=HD)\d+(?=P)')
         pattern2 = re.compile('(?<==)\w+')
 
-        definition = pattern.match(item['title']).group() if pattern.match(item['title']) else None
+        definition = pattern.match(item['title'].encode('utf-8', 'ignore')).group() if pattern.match(item['title'].encode('utf-8', 'ignore')) else None
         hashcode = pattern2.match(item['link']).group() if pattern2.match(item['link']) else None
-        print item['title']
+        print item['title'].encode('utf-8', 'ignore')
         print item['link']
         print definition
         print hashcode
         print detail
-        movie = Movie(title=item['title'],
+        movie = Movie(title=item['title'].encode('utf-8', 'ignore'),
                       date_id=time.strftime('%Y%m%d'),
                       link=item['link'],
                       definition=definition,
