@@ -34,6 +34,9 @@ class Grapmp4BaPipeline(object):
                       detail=detail,
                       hashcode=hashcode
                       )
+        if self.session.query(Movie(hashcode=hashcode)):
+            print 'processed, skip.'
+            exit(0)
         try:
             self.session.add(movie)
             self.session.commit()
